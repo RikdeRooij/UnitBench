@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "NUnitBench.Benchmark": {
+      "commandName": "Project"
+    }
+  }
+}

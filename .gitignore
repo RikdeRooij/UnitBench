@@ -1,0 +1,5 @@
+/_dev
+bin
+obj
+.vs
+/packages
