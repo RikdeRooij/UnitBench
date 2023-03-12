@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.5" />
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.4.0-beta.1">
       <PrivateAssets>all</PrivateAssets>

@@ -35,6 +35,7 @@ namespace NUnitBench
 
     public readonly struct ShapeProperties
     {
+        public static ShapeProperties Create(ShapeTypes type, float l, float h = 0) { return new ShapeProperties(type, l, h); }
         private readonly ShapeTypes type;
         private readonly float l;
         private readonly float h;
@@ -43,6 +44,28 @@ namespace NUnitBench
             this.type = type;
             this.l = l;
             this.h = h;
+        }
+        [System.Diagnostics.Contracts.Pure]
+        public float GetArea()
+        {
+            return this.type switch
+            {
+                ShapeTypes.Rectangle => (this.l * this.h),
+                ShapeTypes.Triangle => (this.l * this.h / 2.0f),
+                ShapeTypes.Circle => (this.l * this.l * (float)Math.PI),
+                _ => throw new InvalidOperationException("Unkown area for type: " + this.type)
+            };
+        }
+        [System.Diagnostics.Contracts.Pure]
+        public float GetArea(ShapeTypes _type)
+        {
+            return _type switch
+            {
+                ShapeTypes.Rectangle => (this.l * this.h),
+                ShapeTypes.Triangle => (this.l * this.h / 2.0f),
+                ShapeTypes.Circle => (this.l * this.l * (float)Math.PI),
+                _ => throw new InvalidOperationException("Unkown area for type: " + _type)
+            };
         }
         [System.Diagnostics.Contracts.Pure]
         public static float GetArea(ShapeProperties props)
@@ -60,6 +83,7 @@ namespace NUnitBench
     [System.Diagnostics.Contracts.Pure]
     public class ShapePropertiesClass
     {
+        public static ShapePropertiesClass Create(ShapeTypes type, float l, float h = 0) { return new ShapePropertiesClass(type, l, h); }
         private readonly ShapeTypes type;
         private readonly float l;
         private readonly float h;
@@ -97,13 +121,16 @@ namespace NUnitBench
     // --------------------------------
     // http://www.excoded.com/learn/csharp/cs_polymorphism.php
 
+    [System.Diagnostics.Contracts.Pure]
     public abstract class Shape
     {
         public abstract float GetArea();
     }
 
+    [System.Diagnostics.Contracts.Pure]
     public class Rectangle : Shape
     {
+        public static Rectangle Create(float l, float h = 0) { return new Rectangle(l, h); }
         private readonly float length;
         private readonly float width;
 
@@ -113,14 +140,17 @@ namespace NUnitBench
             this.width = width;
         }
 
+        [System.Diagnostics.Contracts.Pure]
         public override float GetArea()
         {
             return (length * width);
         }
     }
 
+    [System.Diagnostics.Contracts.Pure]
     public class Triangle : Shape
     {
+        public static Triangle Create(float l, float h = 0) { return new Triangle(l, h); }
         private readonly float baseline;
         private readonly float height;
 
@@ -130,14 +160,18 @@ namespace NUnitBench
             this.height = height;
         }
 
+        [System.Diagnostics.Contracts.Pure]
         public override float GetArea()
         {
             return (baseline * height / 2.0f);
         }
     }
 
+    [System.Diagnostics.Contracts.Pure]
     public class Circle : Shape
     {
+        public static Circle Create(float l, float _) { return new Circle(l); }
+        public static Circle Create(float l) { return new Circle(l); }
         private readonly float radius;
 
         public Circle(float radius)
@@ -145,6 +179,7 @@ namespace NUnitBench
             this.radius = radius;
         }
 
+        [System.Diagnostics.Contracts.Pure]
         public override float GetArea()
         {
             return (radius * radius * (float)Math.PI);
